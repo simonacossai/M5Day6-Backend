@@ -21,7 +21,7 @@ const readFile = fileName => {
 router.get("/:id", (req, res, next) => {
   try {
     const reviewsDB = readFile("reviews.json")
-    const review = reviewsDB.filter(review => review.ID === req.params.id)
+    const review = reviewsDB.filter(review => review.elementId === req.params.id)
     if (review.length > 0) {
       res.send(review)
     } else {
@@ -95,28 +95,6 @@ router.post(
     }
   }
 )
-const projectsImagePath = path.join(__dirname, "../../public/img/products");
-
-router.post(
-    "/:id/upload",
-    upload.single("productPhoto"),
-    async (req, res, next) => {
-      let nameArray = req.file.originalname.split(".");
-      let fileType = "." + nameArray.pop();
-      console.log(nameArray);
-      console.log(fileType);
-      try {
-        await writeFile(
-          path.join(projectsImagePath, req.params.id + fileType),
-          req.file.buffer
-        );
-        res.send("ok");
-      } catch (error) {
-        console.log(error);
-        next(error);
-      }
-    }
-  );
 
 router.delete("/:id", (req, res, next) => {
   try {

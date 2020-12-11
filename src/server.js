@@ -5,6 +5,7 @@ const listEndpoints = require("express-list-endpoints")
 const productsRouter = require("./products")
 const reviewsRouter = require("./reviews")
 const problematicRoutes = require("./problematicRoutes")
+const productsRoute = require("./products");
 
 
 const publicFolderPath = join(__dirname, "../public");
@@ -15,7 +16,7 @@ const port =process.env.PORT || 3001
 
 server.use(cors())
 server.use(express.json()) 
-
+server.use("/products", productsRoute);
 server.use("/reviews", reviewsRouter)
 
 
