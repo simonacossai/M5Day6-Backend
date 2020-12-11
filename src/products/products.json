@@ -1,1 +1,42 @@
-[{"name":"Iphone","description":"he iPhone is a smartphone made by Apple that combines a computer, iPod, digital camera and cellular phone into one device with a touchscreen interface. The iPhone runs the iOS operating system (OS), and as of 2017, there were 2.2 million apps available for it through the Apple App Store, according to Statista.","brand":"APPLE","price":"359","category":"tech","ID":"36kvt3yokikehhe4","modifiedAt":"2020-12-11T15:03:37.803Z","image":"http://localhost:3001/img/products/iphone.png"},{"name":"Matebook 14","description":"he iPhone is a smartphone made by Apple that combines a computer, iPod, digital camera and cellular phone into one device with a touchscreen interface. The iPhone runs the iOS operating system (OS), and as of 2017, there were 2.2 million apps available for it through the Apple App Store, according to Statista.","brand":"HUAWEI","price":"560","category":"tech","ID":"36kvt28kkikejo2l","modifiedAt":"2020-12-11T15:05:19.772Z","image":"http://localhost:3001/img/products/laptop.png"},{"name":"Weekly Planner","description":"They are bound in cardboard with a sewn spine that allows the notebook to lie flat. An elastic band is used to seal, and a ribbon bookmark is included along with an expandable pocket inside the rear cover, which is packed in a paper banderole.","brand":"Moleskine","price":"19","category":"personal","ID":"36kvt218kikel60l","modifiedAt":"2020-12-11T15:06:29.684Z","image":"http://localhost:3001/img/products/moleskine.png"},{"name":"Desk chair","description":"They are bound in cardboard with a sewn spine that allows the notebook to lie flat. An elastic band is used to seal, and a ribbon bookmark is included along with an expandable pocket inside the rear cover, which is packed in a paper banderole.","brand":"Moldt","price":"80","category":"home","ID":"36kvtbt8kikevtcf","modifiedAt":"2020-12-11T15:14:46.478Z","image":"http://localhost:3001/img/products/chair.png"}]
+[
+    {
+        "name": "Iphone",
+        "description": "he iPhone is a smartphone made by Apple that combines a computer, iPod, digital camera and cellular phone into one device with a touchscreen interface. The iPhone runs the iOS operating system (OS), and as of 2017, there were 2.2 million apps available for it through the Apple App Store, according to Statista.",
+        "brand": "APPLE",
+        "price": "359",
+        "category": "tech",
+        "ID": "36kvt3yokikehhe4",
+        "modifiedAt": "2020-12-11T15:03:37.803Z",
+        "image": "http://localhost:3001/img/products/iphone.png"
+    },
+    {
+        "name": "Matebook 14",
+        "description": "he iPhone is a smartphone made by Apple that combines a computer, iPod, digital camera and cellular phone into one device with a touchscreen interface. The iPhone runs the iOS operating system (OS), and as of 2017, there were 2.2 million apps available for it through the Apple App Store, according to Statista.",
+        "brand": "HUAWEI",
+        "price": "560",
+        "category": "tech",
+        "ID": "36kvt28kkikejo2l",
+        "modifiedAt": "2020-12-11T15:05:19.772Z",
+        "image": "http://localhost:3001/img/products/laptop.png"
+    },
+    {
+        "name": "Weekly Planner",
+        "description": "They are bound in cardboard with a sewn spine that allows the notebook to lie flat. An elastic band is used to seal, and a ribbon bookmark is included along with an expandable pocket inside the rear cover, which is packed in a paper banderole.",
+        "brand": "Moleskine",
+        "price": "19",
+        "category": "personal",
+        "ID": "36kvt218kikel60l",
+        "modifiedAt": "2020-12-11T15:06:29.684Z",
+        "image": "http://localhost:3001/img/products/moleskine.png"
+    },
+    {
+        "name": "Desk chair",
+        "description": "They are bound in cardboard with a sewn spine that allows the notebook to lie flat. An elastic band is used to seal, and a ribbon bookmark is included along with an expandable pocket inside the rear cover, which is packed in a paper banderole.",
+        "brand": "Moldt",
+        "price": "80",
+        "category": "home",
+        "ID": "36kvtbt8kikevtcf",
+        "modifiedAt": "2020-12-11T15:14:46.478Z",
+        "image": "http://localhost:3001/img/products/chair.png"
+    }
+]
