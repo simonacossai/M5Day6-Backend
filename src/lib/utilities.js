@@ -1,4 +1,6 @@
 const { writeJSON, readJSON } = require("fs-extra")
+const {join}= require("path")
+const usersPath = join(__dirname, "../users/users.json")
 
 const readDB = async filePath => {
   try {
@@ -21,4 +23,7 @@ const writeDB = async (filePath, data) => {
 module.exports = {
   readDB,
   writeDB,
+  getUsers: async () => readDB(usersPath),
+  writeUsers: async userData => writeDB(usersPath, userData),
 }
+
