@@ -1,18 +1,25 @@
-const {
-Router} = require("express");
+const {Router} = require("express");
 const {body,validationResult,check} = require("express-validator");
 const express = require("express")
 const fs = require("fs")
 const path = require("path")
+const { Transform } = require("json2csv")
 const {writeFile,createReadStream} = require("fs-extra")
 const uniqid = require("uniqid")
 const multer = require("multer");
 const {pipeline} = require("stream");
+const {join}= require("path")
 const {readDB,writeDB} = require("../lib/utilities");
-
+const { parseString } = require("xml2js")
+const publicIp = require("public-ip")
+const axios = require("axios")
+const { promisify } = require("util")
+const { begin } = require("xmlbuilder")
 const upload = multer({});
 
 const router = express.Router()
+
+const asyncParser = promisify(parseString)
 
 const fileReader = (file) => {
     const myPath = path.join(__dirname, file);
@@ -133,6 +140,7 @@ router.put("/:id", (req, res, next) => {
     console.log("PUT ID");
     res.status(200).send();
 });
+
 router.delete("/:id", (req, res, next) => {
     const productsArray = fileReader("products.json");
     const newproductArray = productsArray.filter(
@@ -146,5 +154,91 @@ router.delete("/:id", (req, res, next) => {
     console.log("DELETE ID");
     res.status(200).send();
 });
+
+router.get("/export/ToCSV", (req, res, next) => {
+    try {
+      const path = join(__dirname, "products.json")
+      const jsonReadableStream = createReadStream(path)
+  
+      const json2csv = new Transform({
+        fields: ["name", "brand", "price", "category", "ID", "image"],
+      })
+  
+      res.setHeader("Content-Disposition", "attachment; filename=export.csv")
+      pipeline(jsonReadableStream, json2csv, res, err => {
+        if (err) {
+          console.log(err)
+          next(err)
+        } else {
+          console.log("CSV downloaded")
+        }
+      })
+    } catch (error) {
+      next(error)
+    }
+  })
+
+
+/*
+POST /calculator.asmx HTTP/1.1
+Host: www.dneonline.com
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+SOAPAction: "http://tempuri.org/Add"
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Add xmlns="http://tempuri.org/">
+      <intA>int</intA>
+      <intB>int</intB>
+    </Add>
+  </soap:Body>
+</soap:Envelope> */
+
+  
+router.get("/sum/TwoPrices", async (req, res, next) => {
+    try {
+      const { firstID, secondID } = req.query
+
+    const productfile = fileReader("products.json");
+    const firstProduct = productfile.filter((product) => product.ID === firstID);
+    const secondProduct = productfile.filter((product) => product.ID === secondID);
+
+    const firstPrice = firstProduct[0].price;
+    const secondPrice = secondProduct[0].price;
+  //create a http request (POST on http://www.dneonline.com/calculator.asmx?op=Add)
+  //i need to build xml body to send in my request
+    const xmlBody = begin()
+        .ele("soap:Envelope", {
+          "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+          "xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+          "xmlns:soap": "http://schemas.xmlsoap.org/soap/envelope/"
+        })
+        .ele("soap:Body")
+        .ele("Add", {
+          xmlns: "http://tempuri.org/",
+        })
+        .ele("intA")
+        .text(firstPrice)
+        .up()
+        .ele("intB")
+        .text(secondPrice)
+        .end()
+        
+        const response= await axios({
+            method: 'post',
+            url: 'http://www.dneonline.com/calculator.asmx?op=Add',
+            headers:{"Content-type": "text/xml"},
+            data:xmlBody,
+        })
+        const parsedJS = await asyncParser(response.data)
+        res.send(parsedJS)
+    } catch (error) {
+      console.log(error)
+      next(error)
+    }
+  })
 
 module.exports = router;
